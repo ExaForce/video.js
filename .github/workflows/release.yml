@@ -17,7 +17,7 @@ jobs:
       packages: write      # Required for publishing
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         # We need to fetch the entire history as conventional-changelog needs
         # access to any number of git commits to build the changelog.
         with:
@@ -29,7 +29,7 @@ jobs:
         id: nvm
 
       - name: setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e
         with:
           node-version: '${{steps.nvm.outputs.NVMRC}}'
           cache: npm
@@ -61,7 +61,7 @@ jobs:
         if: env.NETLIFY_BASE != ''
 
       - name: Create Github release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@c95fe1489396fe8a9eb87c0abf8aa5b2ef267fda
         with:
           body_path: CHANGELOG-LATEST.md
           token: ${{github.token}}
@@ -80,13 +80,13 @@ jobs:
       S3_KEY: ${{ secrets.AWS_S3_KEY }}
     steps:
       - name: setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e
 
       - name: npm install video.js
         run: npm install "video.js@$VJS_VERSION"
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_S3_SECRET }}
